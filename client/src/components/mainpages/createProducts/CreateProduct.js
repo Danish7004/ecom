@@ -73,7 +73,7 @@ function CreateProduct(props) {
             formData.append('file', file)
 
                 setLoading(true)
-            const res  = await axios.post('http://localhost:5000/api/upload', formData, {
+            const res  = await axios.post('https://my-ecom-services.onrender.com/api/upload', formData, {
                 headers: {'content-type': 'multipart/form-data', Authorization: token}
             })    
 
@@ -89,7 +89,7 @@ function CreateProduct(props) {
         try {
             if(!isAdmin) return alert('This is only Admin access')
             setLoading(true)
-            await axios.post('/api/destroy', {public_id: images.public_id }, {
+            await axios.post('https://my-ecom-services.onrender.com/api/destroy', {public_id: images.public_id }, {
                 headers: { Authorization: token}
             })
                 setLoading(false)
@@ -112,12 +112,12 @@ function CreateProduct(props) {
             if(!images) return alert('No image is slected')
 
             if(onEdit){
-                await axios.put(`/api/products/${product._id}`, {...product, images}, {
+                await axios.put(`https://my-ecom-services.onrender.com/api/products/${product._id}`, {...product, images}, {
                     headers: { Authorization: token}
                 })
 
             }else{
-                await axios.post('/api/products', {...product, images}, {
+                await axios.post('https://my-ecom-services.onrender.com/api/products', {...product, images}, {
                     headers: { Authorization: token}
                 })
             }

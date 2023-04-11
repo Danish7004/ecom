@@ -14,14 +14,13 @@ function UserApi(token) {
             const getUser = async() =>{
 
                 try {
-                    const res = await axios.get('/user/info', {
+                    const res = await axios.get('https://my-ecom-services.onrender.com/user/info', {
                         headers: {Authorization: token}
                     })
                         setIsLogged(true)
                         res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false)
                         // console.log(res);
-
-//cart me data ko permanently set krne k liye hmko us cart ko useEffect k ander set krna pdta h
+ 
                         setCart(res.data.cart)
 
                 } catch (err) {
@@ -39,13 +38,13 @@ useEffect(()=>{
     if(token){
         const getHistory = async() =>{
             if(isAdmin){
-                const res = await axios.get('/api/payment', {
+                const res = await axios.get('https://my-ecom-services.onrender.com/api/payment', {
                     headers: {Authorization: token}
                 })
                 setHistory(res.data)
             }else{
 
-                const res = await axios.get('/user/history', {
+                const res = await axios.get('https://my-ecom-services.onrender.com/user/history', {
                     headers:{Authorization: token}
                 })
                 // console.log(res)
@@ -67,7 +66,7 @@ useEffect(()=>{
         if(check){
             setCart([...cart, {...product, qty: 1}])
 
-            await axios.patch('/user/addcart', {cart: [...cart, {...product, qty: 1}]}, {
+            await axios.patch('https://my-ecom-services.onrender.com/user/addcart', {cart: [...cart, {...product, qty: 1}]}, {
                 headers: {Authorization: token}
             })
         }else{

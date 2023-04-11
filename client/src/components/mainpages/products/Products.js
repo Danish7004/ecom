@@ -24,11 +24,11 @@ function Products(){
         try {
             setLoading(true)
             if(isAdmin){
-            await axios.post('/api/destroy', {public_id}, {
+            await axios.post('https://my-ecom-services.onrender.com/api/destroy', {public_id}, {
                 headers: { Authorization: token}
             }) 
         
-            await axios.delete(`/api/products/${id}`, {
+            await axios.delete(`https://my-ecom-services.onrender.com/api/products/${id}`, {
                 headers: { Authorization: token}
             })
             

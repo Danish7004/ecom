@@ -26,7 +26,7 @@ function Cart(props) {
     }, [cart]);
 
     const addToCart = async(cart) =>{
-        await axios.patch('/user/addcart', {cart}, {
+        await axios.patch('https://my-ecom-services.onrender.com/user/addcart', {cart}, {
             headers: {Authorization: token}
         })
     };
@@ -69,7 +69,7 @@ function Cart(props) {
         const {paymentID, address} = payment;
         console.log(payment)
 
-        await axios.post('/api/payment', {cart, paymentID, address}, {
+        await axios.post('https://my-ecom-services.onrender.com/api/payment', {cart, paymentID, address}, {
             headers: {Authorization : token}
         })
 

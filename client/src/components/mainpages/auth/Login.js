@@ -17,15 +17,16 @@ function Login(props) {
     const loginSubmit = async(e) =>{
         e.preventDefault()
         try {
-            await axios.post('/user/login', {...user})
-
-            localStorage.setItem('firstLogin', true)
-
-            window.location.href = "/";
-
-        } catch (err) {
-            alert(err.response.data.msg)
-        }
+            const res =  await axios.post('https://my-ecom-services.onrender.com/user/login', {...user})
+              console.log(res, "resp")
+              localStorage.setItem('firstLogin', true)
+              localStorage.setItem('accesstoken', res.data.accesstoken)
+  
+              window.location.href = "/";
+  
+          } catch (err) {
+              alert(err.response.data.msg)
+          }
     }
 
 
