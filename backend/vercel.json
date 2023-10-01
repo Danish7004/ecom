@@ -1,4 +1,4 @@
 {
-    "buils": [{"source": "server.js" , "use":"@vercel/node"}],
+    "build": [{"source": "server.js" , "use":"@vercel/node"}],
     "routes": [{ "source": "/(.*)", "destination": "/server.js" }]
   }
