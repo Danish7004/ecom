@@ -14,7 +14,7 @@ function RazorPayment({
   const displayRazorpay = async () => {
     // creating a new order
     const result = await axios.post(
-      "http://localhost:5000/api/payment/order",
+      "https://ecom-orpin-psi.vercel.app/api/payment/order",
       { totalAmount },
       {
         headers: { Authorization: token },
@@ -46,7 +46,7 @@ function RazorPayment({
         };
 
         const result = await axios.post(
-          "http://localhost:5000/api/payment/success",
+          "https://ecom-orpin-psi.vercel.app/api/payment/success",
           data,
           {
             headers: { Authorization: token },
