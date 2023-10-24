@@ -13,6 +13,7 @@ import { catRouter } from './routes/categoryRouter.js';
 import { routerImg } from './routes/upload.js';
 import { productRouter } from './routes/productRouter.js';
 import { paymentRouter } from './routes/paymentRouter.js';
+import {razorpaymentRouter} from './routes/razorpaymentRouter.js'
 
 const app = express();
 dotenv.config();
@@ -28,6 +29,7 @@ app.use('/api', catRouter);
 app.use('/api', routerImg);
 app.use('/api', productRouter);
 app.use('/api', paymentRouter);
+app.use('/api', razorpaymentRouter);
 
 
 //Connect to Mongodb

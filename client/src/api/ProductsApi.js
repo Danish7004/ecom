@@ -15,7 +15,7 @@ function ProductsApi(props) {
     useEffect(()=>{
 
     const getProducts = async() =>{
-        const res = await axios.get(`https://my-ecom-services.onrender.com/api/products?limit=${page*9}&${category}&${sort}&title[regex]=${search}`)
+        const res = await axios.get(`https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/api/products?limit=${page*9}&${category}&${sort}&title[regex]=${search}`)
         console.log(res)
         // console.log(res.data.products);
         setProducts(res.data.products);

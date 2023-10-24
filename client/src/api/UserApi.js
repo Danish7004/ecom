@@ -14,7 +14,7 @@ function UserApi(token) {
             const getUser = async() =>{
 
                 try {
-                    const res = await axios.get('https://my-ecom-services.onrender.com/user/info', {
+                    const res = await axios.get('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/user/info', {
                         headers: {Authorization: token}
                     })
                         setIsLogged(true)
@@ -38,13 +38,13 @@ useEffect(()=>{
     if(token){
         const getHistory = async() =>{
             if(isAdmin){
-                const res = await axios.get('https://my-ecom-services.onrender.com/api/payment', {
+                const res = await axios.get('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/api/payment', {
                     headers: {Authorization: token}
                 })
                 setHistory(res.data)
             }else{
 
-                const res = await axios.get('https://my-ecom-services.onrender.com/user/history', {
+                const res = await axios.get('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/user/history', {
                     headers:{Authorization: token}
                 })
                 // console.log(res)
@@ -66,7 +66,7 @@ useEffect(()=>{
         if(check){
             setCart([...cart, {...product, qty: 1}])
 
-            await axios.patch('https://my-ecom-services.onrender.com/user/addcart', {cart: [...cart, {...product, qty: 1}]}, {
+            await axios.patch('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/user/addcart', {cart: [...cart, {...product, qty: 1}]}, {
                 headers: {Authorization: token}
             })
         }else{

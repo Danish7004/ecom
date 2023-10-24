@@ -16,13 +16,13 @@ function Categories(props) {
          
         try {
             if(onEdit){
-                const res = await axios.put(`https://my-ecom-services.onrender.com/api/category/${id}`, {name: category}, {
+                const res = await axios.put(`https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/api/category/${id}`, {name: category}, {
                     headers: {Authorization: token} 
                 })
                 alert(res.data.msg)
             }else{
 
-                const res = await axios.post('https://my-ecom-services.onrender.com/api/category', {name: category}, {
+                const res = await axios.post('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/api/category', {name: category}, {
                     headers: {Authorization: token}
                 })
                 // console.log(res)
@@ -46,7 +46,7 @@ function Categories(props) {
         if(window.confirm("Please confirm before delete")){
 
         try {
-            const res = await axios.delete(`https://my-ecom-services.onrender.com/api/category/${id}`, {
+            const res = await axios.delete(`https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/api/category/${id}`, {
                 headers: {Authorization: token}
             })
             alert(res.data.msg)

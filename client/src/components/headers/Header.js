@@ -23,7 +23,7 @@ function Header(props) {
         const [menu, setMenu] = useState(false)
 
     const logoutUser = async() =>{
-        await axios.get('https://my-ecom-services.onrender.com/user/logout')
+        await axios.get('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/user/logout')
         localStorage.clear()
         // setIsAdmin(false)
         // setIsLogged(false)

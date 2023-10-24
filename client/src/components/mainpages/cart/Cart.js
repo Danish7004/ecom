@@ -3,6 +3,7 @@ import { GlobalState } from '../../../GlobalState';
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
 // import PayPalButton from './PayPalButton';
+import RazorPayment from './RazorPayment';
 
 function Cart(props) {
     const state = useContext(GlobalState);
@@ -11,8 +12,8 @@ function Cart(props) {
     const [total, setTotal] = useState(0);
     const [token] = state.token
 
-    const [callback, setCallback] = state.userApi.callback
-    const [callBack, setCallBack ] = state.productsApi.callBack
+    const [callbackUser, setCallbackUser] = state.userApi.callback
+    const [callbackProducts, setCallbackProducts ] = state.productsApi.callBack
 
 
     useEffect(()=>{
@@ -26,7 +27,7 @@ function Cart(props) {
     }, [cart]);
 
     const addToCart = async(cart) =>{
-        await axios.patch('https://my-ecom-services.onrender.com/user/addcart', {cart}, {
+        await axios.patch('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/user/addcart', {cart}, {
             headers: {Authorization: token}
         })
     };
@@ -65,20 +66,20 @@ function Cart(props) {
 
 
     //for payment
-    const tranSuccess = async(payment) =>{
-        const {paymentID, address} = payment;
-        console.log(payment)
+    // const tranSuccess = async(payment) =>{
+    //     const {paymentID, address} = payment;
+    //     console.log(payment)
 
-        await axios.post('https://my-ecom-services.onrender.com/api/payment', {cart, paymentID, address}, {
-            headers: {Authorization : token}
-        })
+    //     await axios.post('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/api/payment', {cart, paymentID, address}, {
+    //         headers: {Authorization : token}
+    //     })
 
-        alert("Your order has been successfully placed")
-        setCart([])
-        addToCart([])
-        setCallback(!callback)
-        setCallBack(!callBack)
-    }
+    //     alert("Your order has been successfully placed")
+    //     setCart([])
+    //     addToCart([])
+    //     setCallback(!callback)
+    //     setCallBack(!callBack)
+    // }
 
     
     if(!isLogged) return  <h2 style={{textAlign:"center" , fontSize:"5rem"}}> please login</h2>
@@ -117,9 +118,16 @@ function Cart(props) {
           }
                         <div className="total">
                             <h3>Total: $ {total}</h3>
-                           {/* <PayPalButton 
-                           total={total}
-                           tranSuccess={tranSuccess}/> */}
+                          <RazorPayment 
+                          totalAmount={total}
+                          token={token}
+                          setCart={setCart}
+                          addToCart={addToCart}
+                          setCallbackUser={setCallbackUser}
+                          setCallbackProducts={setCallbackProducts}
+                          callbackUser={callbackUser}
+                          callbackProducts={callbackProducts}
+                          />
                         </div>
         </div>
     );

@@ -24,11 +24,11 @@ function Products(){
         try {
             setLoading(true)
             if(isAdmin){
-            await axios.post('https://my-ecom-services.onrender.com/api/destroy', {public_id}, {
+            await axios.post('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/api/destroy', {public_id}, {
                 headers: { Authorization: token}
             }) 
         
-            await axios.delete(`https://my-ecom-services.onrender.com/api/products/${id}`, {
+            await axios.delete(`https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/api/products/${id}`, {
                 headers: { Authorization: token}
             })
             

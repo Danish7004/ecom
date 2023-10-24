@@ -18,7 +18,7 @@ function Register(props) {
     const registerSubmit = async(e) =>{
         e.preventDefault()
         try {
-           const res = await axios.post('https://my-ecom-services.onrender.com/user/register', {...user})
+           const res = await axios.post('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/user/register', {...user})
 
             localStorage.setItem('firstLogin', true)
             localStorage.setItem('accesstoken', res.data.accesstoken)

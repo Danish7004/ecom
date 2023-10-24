@@ -17,7 +17,7 @@ function Login(props) {
     const loginSubmit = async(e) =>{
         e.preventDefault()
         try {
-            const res =  await axios.post('https://my-ecom-services.onrender.com/user/login', {...user})
+            const res =  await axios.post('https://ecom-eczsp7504-danishmoin21-gmailcom.vercel.app/user/login', {...user})
               console.log(res, "resp")
               localStorage.setItem('firstLogin', true)
               localStorage.setItem('accesstoken', res.data.accesstoken)
