@@ -1,4 +1,4 @@
-// server.js  (ESM)
+// server.js (ESM)
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -7,10 +7,10 @@ import fileUpload from "express-fileupload";
 import cookieParser from "cookie-parser";
 import serverless from "serverless-http";
 
-// component imports
+// routers
 import { router as userRouter } from "./routes/userRouter.js";
 import { catRouter } from "./routes/categoryRouter.js";
-import { routerImg } from "./routes/upload.js";
+import { router as routerImg } from "./routes/upload.js";
 import { productRouter } from "./routes/productRouter.js";
 import { paymentRouter } from "./routes/paymentRouter.js";
 import { razorpaymentRouter } from "./routes/razorpaymentRouter.js";
@@ -23,15 +23,15 @@ app.use(cookieParser());
 app.use(cors());
 app.use(
   fileUpload({
-    useTempFiles: true, // uses /tmp on Vercel which is allowed
+    useTempFiles: true,
+    tempFileDir: "/tmp", // Vercel allows writing only to /tmp
+    createParentPath: true,
   })
 );
 
-/**
- * Route mounting
- * Note: behind Vercel we’ll route /api/* to this function,
- * so all app routes should start with /api
- */
+// ---- Routes (behind /api) ----
+app.get("/api/health", (_req, res) => res.json({ ok: true }));
+
 app.use("/api/user", userRouter);
 app.use("/api", catRouter);
 app.use("/api", routerImg);
@@ -39,49 +39,53 @@ app.use("/api", productRouter);
 app.use("/api", paymentRouter);
 app.use("/api", razorpaymentRouter);
 
-// Simple health check
-app.get("/api/health", (_req, res) => res.json({ ok: true }));
-
-/**
- * MongoDB connection (reused across invocations)
- */
+// ---- Mongo connection (reuse across invocations) ----
 const { MONGODB_URI } = process.env;
 
-// cache the connection across serverless invocations
-let cached = global.mongoose;
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+if (!MONGODB_URI) {
+  console.error("Missing MONGODB_URI env var");
 }
+
+let cached = global.mongoose;
+if (!cached) cached = global.mongoose = { conn: null, promise: null };
 
 async function connectToDatabase() {
   if (cached.conn) return cached.conn;
   if (!cached.promise) {
     cached.promise = mongoose
       .connect(MONGODB_URI, {
-        // modern options are defaults in Mongoose 7/8, but safe to include
         useNewUrlParser: true,
         useUnifiedTopology: true,
       })
       .then((m) => {
         console.log("MongoDB connected");
         return m;
+      })
+      .catch((err) => {
+        console.error("Mongo connection error:", err);
+        throw err;
       });
   }
   cached.conn = await cached.promise;
   return cached.conn;
 }
 
-// Ensure DB connection before handling any request
+// ensure DB before handling routes
 app.use(async (_req, _res, next) => {
   try {
     await connectToDatabase();
     next();
-  } catch (err) {
-    console.error("MongoDB connection error:", err);
-    next(err);
+  } catch (e) {
+    next(e);
   }
 });
 
-// ❌ No app.listen() in serverless
-// ✅ Export a serverless handler instead
+// global error handler to avoid silent 500s
+app.use((err, _req, res, _next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({ error: "Internal Server Error" });
+});
+
+// ❌ No app.listen in serverless
+// ✅ Export serverless handler
 export default serverless(app);
